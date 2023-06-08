@@ -1,0 +1,247 @@
+--1)      Mostrar todos los datos de los empleados (tabla: employees) ordenados por apellido (last_name), cuyo nro de empleado (employee_id) > 10.
+
+  SELECT * FROM employees WHERE employee_id > 10 ORDER BY last_name
+--2)      Mostrar el apellido (last_name), nombre (first_name) y salario (salario) del empleado (tabla: employees) con apellido (last_name) llamado �Whalen�.
+ SELECT last_name, first_name, salary FROM employees WHERE last_name = 'Whalen'
+--3)      Mostrar el nro de empleado (employee_id), apellido (last_name) y nombre (first_name) de todos los empleados (tabla: employees) utilizando el alias Apellido para la columna last_name y nombre para first_name (deben mostrarse de la misma manera, respetando may�sculas y min�sculas) ordenando los datos por nro de empleado (employee_id) en forma descendente).
+ SELECT employee_id, last_name AS "apellido", first_name AS "nombre"
+FROM employees
+ORDER BY employee_id DESC
+--4)      Mostrar el apellido (last_name) y nombre (first_name) en una misma columna (asignar como alias Apellido y Nombre, adem�s de la fecha de ingreso (hire_date) de los empleados (tabla: employees) ordenando los datos por salario (salary), que se encuentran en el departamento (department_id) 100 0 120.
+SELECT last_name || ' ' || first_name AS "Apellido y Nombre", hire_date 
+FROM employees 
+WHERE department_id BETWEEN 100 AND 120 ORDER BY salary
+
+--5)    Mostrar los empleados cuyo apellido comience con A.
+ SELECT *
+FROM Employees 
+WHERE LastName LIKE %A%
+
+
+--6)      Mostrar los apellidos (last_name) de los empleados (tabla: employees), en el caso de que haya 2 empleados con el mismo apellido (last_name) mostrar s�lo una vez el mismo.
+ SELECT *
+FROM employees
+WHERE DISTINCT last_name 
+--7)    Mostrar los datos del departamento (tabla: departments) denominado (department_name) IT
+SELECT department_name
+FROM departments 
+WHERE department_name = 'IT'
+ 
+--8)      Mostrar el nro. De empleado (employee_id), apellido (last_name) y nombre de los empleados cuyo salario (salary) no sea igual a $2500.
+ SELECT employee_id, first_name, last_name, salary
+
+FROM employee
+
+WHERE salary not 2500
+
+--9)      Mostrar los nombres (department_name) de los departamentos (tabla: departments) que poseen un nro de departamento (department_id) comprendido entre 40 y 100.
+
+SELECT  department_name
+
+FROM department
+
+WHERE department_id BETWEEN 40 and 100 
+--10)   Mostrar los empleados (tabla: employees) que no poseen departamento (department_id).
+ SELECT * 
+FROM employees
+WHERE department_id is null 
+
+--11)   Mostrar el nro. De empleado (employee_id), apellido (last_name) y nombre de los empleados cuyo nro de empleado sea 100 o 101.
+ 
+--12)   Mostrar el nro de empleado (employee_id), apellido (last_name), nombre (first_name), y el nombre de departamento (department_name) de los empleados (tabla: employees) que se encuentran en le departamento (department_id) 50
+ SELECT employee_id, last_name, first_name, department_name, department_id
+FROM employees
+
+WHERE department_id = 50
+
+
+--13)   Mostrar la cantidad de empleados (tabla: employees).
+ SELECT COUNT(*)
+FROM employees
+
+--14)   Mostrar el apellido y nombre del empleado, adem�s el nombre del departamento cuyos empleados tengan una o como segunda letra de su apellido.
+ SELET e.apellido, e.nombre, d.nombre 
+FROM empleados e, departamentos d 
+
+WHERE e.dept_no = d.dept_no AND e.apellido 
+
+--15)   Mostrar el salario m�ximo (salary) de los empleados (tabla: employees) del departamento 20.
+ SELECT MAX(salary]) AS max_salary
+FROM employees
+
+WHERE departament_id = 20
+
+
+--16)   Mostrar la diferencia entre el salario m�nimo y m�ximo.
+ SELECT MAX(Salary) AS max_salary and MIN (salary) as min_salary
+FROM employees
+
+--17)   Mostrar la cantidad de departamentos (department_id) diferentes que poseen los empleados (tabla: employees).
+
+SELECT COUNT(DISTINCT department_id) AS num_departments
+FROM employees
+
+--18)   Mostrar la cantidad de empleados por departamento (employee_id), si la cantidad es mayor a 5 (tabla: employees).
+SELECT department_id, COUNT(employee_id) AS num_employees
+FROM employees
+GROUP BY department_id
+HAVING COUNT(employee_id) > 5;
+--19)   Mostrar los empleados que ganan el salario m�nimo.
+
+ 
+--20)   Mostrar el salario (salary) promedio de cada uno de los departamentos (asignarle el alias Salario Promedio.), adem�s del nro de departamento (department_id) y nombre (department_name), (tablas: employees/departments)
+ 
+--21)   . Buscar todos los departamentos que no tengan empleados
+SELECT d.department_id, d.department_name
+FROM departments d
+LEFT JOIN employees e ON d.department_id = e.department_id
+WHERE e.employee_id IS NULL;
+
+--22)   Mostrar el salario (salary) m�nimo por departamento (department_id) y cargo (job_id). (tabla: employees).
+ SELECT department_id, job_id, MIN(salary) AS "Salario M�nimo"
+FROM employees
+
+GROUP BY department_id, job_id;
+--23)   Mostrar los empleados (tabla: employees) que ganan m�s (salary) que el empleado 101.
+ SELECT *
+FROM employees
+WHERE salary > (SELECT salary FROM employees WHERE employee_id = 101);
+
+
+--24)   Mostrar los empleados (tabla: employees) que se encuentren en el departamento (department_id) 50 y que ganan (salary) m�s que el empleado (employee_id) 120
+ 
+
+--25)   Crear la tabla denominada emple con los mismos datos y estructura de la tabla employees.
+CREATE TABLE emp_pagano AS
+SELECT * FROM Employees;
+--26)   Crear la tabla dep con los siguientes campos:Id, de tipo number(5) y nombre de tipo varchar2(50)
+
+SELECT *
+FROM emp_pagano
+
+SELECT * 
+FROM dep_pagano
+
+CREATE TABLE dep_pagano (
+        id INT PRIMARY KEY,
+        nombre VARCHAR(50) 
+        );
+--27)   Crear la columna cantidad_empleados en la tabla dep.La columna debe ser del tipo number.
+ALTER TABLE dep_pagano ADD cantidad_empleados NUMBER
+--28)   Modificar la tabla dep para que el nombre tenga una longitud de 100.
+ ALTER TABLE dep_pagano nombre VARCHAR(100)
+--29)   Agregar una clave primaria a la tabla de emple (employee_id)
+ ALTER TABLE emp_pagano
+ADD CONSTRAINT pagano_pk_emple PRIMARY KEY (employee_id);
+--30)  Insertar en la tabla dep el siguiente registro: Id 10
+Nombre: nuevo departamento Cantidad_empleados: 25
+ 
+--31)   Modificar el nombre del departamento 10 de la tabla dep por Recursos Humanos
+UPDATE dep_pagano
+SET nombre = 'Recursos Humanos'
+WHERE departamento  = 10
+--32)   Eliminar de la tabla emp el empleado 110.
+DELETE FROM emp_pagano
+WHERE employee_id = 110
+--33)   Eliminar la tabla dep.
+DROP TABLE dep_pagano;
+
+--34)Mostrar el nro. De empleado, la fecha de ingreso (hire_date) de los empleados (tabla:employees) y la misma fecha m�s un a�o.
+SELECT DATEADD(year, 1, hire_date) AS hire_date_plus_one_year
+FROM employees 
+   
+SELECT employees_id, hire_date, DATEADD(year, 1, hire_date) AS DateAdd FROM employees;
+--MAL--
+
+--35) Mostrar el apellido (last_name) en may�sculas, nombre (first_name) en min�sculas y nro de departamento (department_id) de los empleados (tabla: employees) qua poseen de salario (salary) 7000. En el caso de que el empleado no posea departamento (department_id) mostrar el nro 99 en lugar del valor nulo.
+SELECT UPPER(last_name), LOWER(first_name), COALESCE(department_id, 99), salary 
+FROM employees
+WHERE salary = 7000;
+
+--36) Mostrar el �ltimo d�a del mes actual
+
+
+-- ADICIONALES
+--19A) Cree una tabla EMP bas�ndose en el siguiente cuadro. Confirme que se ha creado la tabla.
+CREATE TABLE emp_pagano2 (
+       id NUMBER (7) PRIMARY KEY,
+       last_name VARCHAR(25),
+       first_name VARCHAR(25),
+       dept_id NUMBER (7)
+       );
+COMMIT;
+
+SELECT *
+FROM emp_pagano2
+
+--20A) Modifique la tabla EMP para permitir apellidos de empleado m�s largos. Confirme la modificaci�n.
+ALTER TABLE emp_pagano2 
+      MODIFY last_name VARCHAR(100)
+COMMIT;
+      
+--21A) Cree la tabla EMPLOYEES2 bas�ndose en la estructura de la tabla EMPLOYEES. Incluya s�lo las columnas EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY y DEPARTMENT_ID. Llame a las columnas de la nueva tabla ID, FIRST_NAME, LAST_NAME, SALARY y DEPT_ID, respectivamente.
+CREATE TABLE employees1999 (
+       id NUMBER (7),
+       first_name varchar(10),
+       last_name varchar(10),
+       salary NUMBER (10),
+       dep_id NUMBER (5)
+       );
+SELECT * FROM C 
+
+--22A) Borre la tabla EMP.
+DROP TABLE emp_pagano2
+
+--23A) Cambie el nombre de la tabla EMPLOYEES2 a EMP.
+ALTER TABLE employees1999 RENAME TO emp_1999;
+SELECT * FROM emp_1999; 
+
+--24A) Borre la columna FIRST_NAME de la tabla EMP. Confirme la modificaci�n comprobando la descripci�n de la tabla.
+ALTER TABLE emp_1999
+DROP COLUMN first_name;
+
+--25A)Agregue una restricci�n de PRIMARY KEY de nivel de tabla a la tabla EMP en la columna ID. Se debe poner nombre a la restricci�n en el momento de su creaci�n. Llame a la restricci�n my_emp_id_pk.
+ALTER TABLE my_emp_idpk_PAGANO
+ADD CONSTRAINT my_emp_idpk_PAGANO PRIMARY KEY (ID);
+
+--26A)
+
+--27A) Crear la tabla MY_EMPLOYEE que se utilizar� para la pr�ctica.
+CREATE TABLE my_employee_PAGANO
+(id NUMBER(4) CONSTRAINT my_employee_id_nn_paganp NOT NULL, last_name VARCHAR2(25),
+first_name VARCHAR2(25), userid VARCHAR2(8), salary NUMBER(9,2));
+
+select *
+from my_employee_PAGANO
+--28A)
+INSERT INTO my_employee_PAGANO 
+VALUES (1, 'Patel', 'Ralph', 'Taptem', 895)
+
+--29A) Rellene la tabla MY_EMPLOYEE con la segunda fila de los datos de ejemplo de la lista anterior. Esta vez, enumere las columnas expl�citamente en la cl�usu
+INSERT INTO my_employee_PAGANO 
+VALUES (2, 'Dancs', 'Betty', 'Bdancs', 860),
+       (3, 'Bir', 'Ben', 'Bbir', 1100);
+--30A) Haga que las adiciones de datos sean permanentes.
+COMMIT; 
+--31A) Cambie el apellido del empleado 3 por Drexler.
+UPDATE my_employee_PAGANO 
+SET LAST_NAME = 'Drexler'
+WHERE ID = 3;
+
+--32A) 
+UPDATE my_employee_PAGANO
+SET SALARY = 1000
+WHERE SALARY < 900;
+
+--33A) Suprima a Betty Dancs de la tabla MY_EMPLOYEE.
+DELETE FROM my_employee_PAGANO
+WHERE FIRST_NAME = 'Betty' AND LAST_NAME = 'Dancs';
+
+SELECT first_name, last_name 
+	FROM EMPLOYEES
+		WHERE (first_name, 1) = (last_name, 1)
+      
+select * 
+from employees
+      
+      
